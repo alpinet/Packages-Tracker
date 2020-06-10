@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang = "en">
+<script type = "text/javascript" src = "tracking.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+
+<h1>Track your packages!</h1>
+
+<form method = "POST">
+        <input type = "text", placeholder = "Add Tracking Number", name = "AddTrackingNum">
+        <input class = "btn btn-primary" type = "submit">
+</form>
+
+<form method = "POST">
+        <input type = "text", placeholder = "Remove Tracking Number", name = "RemoveTrackingNum">
+        <input class = "btn btn-primary" type = "submit">
+</form>
+<body>Last update: {{current_dateTime}}</body>
+
+<table id = "tbl">
+   <tr>
+        <th>Company</th>
+        <th>Tracking Number</th>
+        <th>Location</th>
+        <th>Status</th>
+        <th>As of </th>
+   </tr>
+  </table>
+
+</html>
