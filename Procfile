@@ -1,1 +1,1 @@
-web: gunicorn UPS_API:app
+web: gunicorn webpage:app
