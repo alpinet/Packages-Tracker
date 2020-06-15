@@ -1,320 +1,119 @@
 {
     "TrackResponse": {
-        "Response": {
-            "ResponseStatus": {
-                "Code": "1",
-                "Description": "Success"
+        "TrackInfo": {
+            "@ID": "9449010205561009777268",
+            "TrackSummary": {
+                "EventTime": "9:26 am",
+                "EventDate": "March 27, 2020",
+                "Event": "Delivered, In/At Mailbox",
+                "EventCity": "SAN GABRIEL",
+                "EventState": "CA",
+                "EventZIPCode": "91775",
+                "EventCountry": null,
+                "FirmName": null,
+                "Name": null,
+                "AuthorizedAgent": "false",
+                "DeliveryAttributeCode": "01"
             },
-            "TransactionReference": {
-                "CustomerContext": "Your Test Case Summary Description"
-            }
-        },
-        "Shipment": {
-            "InquiryNumber": {
-                "Code": "01",
-                "Description": "ShipmentIdentificationNumber",
-                "Value": "1ZRA15530376445450"
-            },
-            "ShipperNumber": "RA1553",
-            "ShipmentAddress": [
+            "TrackDetail": [
                 {
-                    "Type": {
-                        "Code": "01",
-                        "Description": "Shipper Address"
-                    },
-                    "Address": {
-                        "AddressLine": "E 1000 23RD ST",
-                        "City": "PANAMA CITY",
-                        "StateProvinceCode": "FL",
-                        "PostalCode": "324055301",
-                        "CountryCode": "US"
-                    }
+                    "EventTime": "7:10 am",
+                    "EventDate": "March 27, 2020",
+                    "Event": "Out for Delivery",
+                    "EventCity": "SAN GABRIEL",
+                    "EventState": "CA",
+                    "EventZIPCode": "91775",
+                    "EventCountry": null,
+                    "FirmName": null,
+                    "Name": null,
+                    "AuthorizedAgent": "false"
                 },
                 {
-                    "Type": {
-                        "Code": "02",
-                        "Description": "ShipTo Address"
-                    },
-                    "Address": {
-                        "City": "PLEASANTON",
-                        "StateProvinceCode": "CA",
-                        "PostalCode": "94588",
-                        "CountryCode": "US"
-                    }
+                    "EventTime": "4:15 am",
+                    "EventDate": "March 27, 2020",
+                    "Event": "Arrived at Post Office",
+                    "EventCity": "SAN GABRIEL",
+                    "EventState": "CA",
+                    "EventZIPCode": "91778",
+                    "EventCountry": null,
+                    "FirmName": null,
+                    "Name": null,
+                    "AuthorizedAgent": "false"
+                },
+                {
+                    "EventTime": null,
+                    "EventDate": "March 26, 2020",
+                    "Event": "In Transit to Next Facility",
+                    "EventCity": null,
+                    "EventState": null,
+                    "EventZIPCode": null,
+                    "EventCountry": null,
+                    "FirmName": null,
+                    "Name": null,
+                    "AuthorizedAgent": "false"
+                },
+                {
+                    "EventTime": "5:46 pm",
+                    "EventDate": "March 25, 2020",
+                    "Event": "Departed USPS Regional Destination Facility",
+                    "EventCity": "LOS ANGELES CA NETWORK DISTRIBUTION CENTER",
+                    "EventState": null,
+                    "EventZIPCode": null,
+                    "EventCountry": null,
+                    "FirmName": null,
+                    "Name": null,
+                    "AuthorizedAgent": "false"
+                },
+                {
+                    "EventTime": "4:19 pm",
+                    "EventDate": "March 25, 2020",
+                    "Event": "Arrived at USPS Regional Destination Facility",
+                    "EventCity": "LOS ANGELES CA NETWORK DISTRIBUTION CENTER",
+                    "EventState": null,
+                    "EventZIPCode": null,
+                    "EventCountry": null,
+                    "FirmName": null,
+                    "Name": null,
+                    "AuthorizedAgent": "false"
+                },
+                {
+                    "EventTime": "6:25 am",
+                    "EventDate": "March 22, 2020",
+                    "Event": "Arrived at USPS Regional Origin Facility",
+                    "EventCity": "PITTSBURGH PA NETWORK DISTRIBUTION CENTER",
+                    "EventState": null,
+                    "EventZIPCode": null,
+                    "EventCountry": null,
+                    "FirmName": null,
+                    "Name": null,
+                    "AuthorizedAgent": "false"
+                },
+                {
+                    "EventTime": "5:10 am",
+                    "EventDate": "March 22, 2020",
+                    "Event": "Accepted at USPS Origin Facility",
+                    "EventCity": "FERNDALE",
+                    "EventState": "MI",
+                    "EventZIPCode": "48220",
+                    "EventCountry": null,
+                    "FirmName": null,
+                    "Name": null,
+                    "AuthorizedAgent": "false"
+                },
+                {
+                    "EventTime": "1:35 pm",
+                    "EventDate": "March 18, 2020",
+                    "Event": "Shipping Label Created, USPS Awaiting Item",
+                    "EventCity": "FERNDALE",
+                    "EventState": "MI",
+                    "EventZIPCode": "48220",
+                    "EventCountry": null,
+                    "FirmName": null,
+                    "Name": null,
+                    "AuthorizedAgent": "false",
+                    "DeliveryAttributeCode": "33"
                 }
-            ],
-            "ShipmentWeight": {
-                "UnitOfMeasurement": {
-                    "Code": "LBS"
-                },
-                "Weight": "5.30"
-            },
-            "Service": {
-                "Code": "003",
-                "Description": "UPS Ground"
-            },
-            "PickupDate": "20200330",
-            "Package": {
-                "TrackingNumber": "1ZRA15530376445450",
-                "Activity": [
-                    {
-                        "ActivityLocation": {
-                            "Address": {
-                                "City": "PLEASANTON",
-                                "StateProvinceCode": "CA",
-                                "PostalCode": "94588",
-                                "CountryCode": "US"
-                            },
-                            "Code": "ML",
-                            "Description": "Front Door",
-                            "SignedForByName": "DRIVER RELEASE"
-                        },
-                        "Status": {
-                            "Type": "D",
-                            "Description": "Delivered",
-                            "Code": "FS"
-                        },
-                        "Date": "20200403",
-                        "Time": "170357"
-                    },
-                    {
-                        "ActivityLocation": {
-                            "Address": {
-                                "City": "San Ramon",
-                                "StateProvinceCode": "CA",
-                                "CountryCode": "US"
-                            },
-                            "Description": "Front Door"
-                        },
-                        "Status": {
-                            "Type": "I",
-                            "Description": "Out For Delivery Today",
-                            "Code": "OT"
-                        },
-                        "Date": "20200403",
-                        "Time": "090000"
-                    },
-                    {
-                        "ActivityLocation": {
-                            "Address": {
-                                "City": "San Ramon",
-                                "StateProvinceCode": "CA",
-                                "CountryCode": "US"
-                            },
-                            "Description": "Front Door"
-                        },
-                        "Status": {
-                            "Type": "I",
-                            "Description": "Loaded on Delivery Vehicle",
-                            "Code": "OF"
-                        },
-                        "Date": "20200403",
-                        "Time": "042522"
-                    },
-                    {
-                        "ActivityLocation": {
-                            "Address": {
-                                "City": "San Ramon",
-                                "StateProvinceCode": "CA",
-                                "CountryCode": "US"
-                            },
-                            "Description": "Front Door"
-                        },
-                        "Status": {
-                            "Type": "I",
-                            "Description": "Destination Scan",
-                            "Code": "DS"
-                        },
-                        "Date": "20200403",
-                        "Time": "034737"
-                    },
-                    {
-                        "ActivityLocation": {
-                            "Address": {
-                                "City": "San Ramon",
-                                "StateProvinceCode": "CA",
-                                "CountryCode": "US"
-                            },
-                            "Description": "Front Door"
-                        },
-                        "Status": {
-                            "Type": "I",
-                            "Description": "Arrival Scan",
-                            "Code": "AR"
-                        },
-                        "Date": "20200402",
-                        "Time": "222300"
-                    },
-                    {
-                        "ActivityLocation": {
-                            "Address": {
-                                "City": "San Pablo",
-                                "StateProvinceCode": "CA",
-                                "CountryCode": "US"
-                            },
-                            "Description": "Front Door"
-                        },
-                        "Status": {
-                            "Type": "I",
-                            "Description": "Departure Scan",
-                            "Code": "DP"
-                        },
-                        "Date": "20200402",
-                        "Time": "213000"
-                    },
-                    {
-                        "ActivityLocation": {
-                            "Address": {
-                                "City": "San Pablo",
-                                "StateProvinceCode": "CA",
-                                "CountryCode": "US"
-                            },
-                            "Description": "Front Door"
-                        },
-                        "Status": {
-                            "Type": "I",
-                            "Description": "Arrival Scan",
-                            "Code": "AR"
-                        },
-                        "Date": "20200402",
-                        "Time": "100700"
-                    },
-                    {
-                        "ActivityLocation": {
-                            "Address": {
-                                "City": "Memphis",
-                                "StateProvinceCode": "TN",
-                                "CountryCode": "US"
-                            },
-                            "Description": "Front Door"
-                        },
-                        "Status": {
-                            "Type": "I",
-                            "Description": "Departure Scan",
-                            "Code": "DP"
-                        },
-                        "Date": "20200401",
-                        "Time": "002400"
-                    },
-                    {
-                        "ActivityLocation": {
-                            "Address": {
-                                "City": "Memphis",
-                                "StateProvinceCode": "TN",
-                                "CountryCode": "US"
-                            },
-                            "Description": "Front Door"
-                        },
-                        "Status": {
-                            "Type": "I",
-                            "Description": "Arrival Scan",
-                            "Code": "AR"
-                        },
-                        "Date": "20200331",
-                        "Time": "091700"
-                    },
-                    {
-                        "ActivityLocation": {
-                            "Address": {
-                                "City": "Montgomery",
-                                "StateProvinceCode": "AL",
-                                "CountryCode": "US"
-                            },
-                            "Description": "Front Door"
-                        },
-                        "Status": {
-                            "Type": "I",
-                            "Description": "Departure Scan",
-                            "Code": "DP"
-                        },
-                        "Date": "20200331",
-                        "Time": "035600"
-                    },
-                    {
-                        "ActivityLocation": {
-                            "Address": {
-                                "City": "Montgomery",
-                                "StateProvinceCode": "AL",
-                                "CountryCode": "US"
-                            },
-                            "Description": "Front Door"
-                        },
-                        "Status": {
-                            "Type": "I",
-                            "Description": "Arrival Scan",
-                            "Code": "AR"
-                        },
-                        "Date": "20200331",
-                        "Time": "000400"
-                    },
-                    {
-                        "ActivityLocation": {
-                            "Address": {
-                                "City": "Panama City",
-                                "StateProvinceCode": "FL",
-                                "CountryCode": "US"
-                            },
-                            "Description": "Front Door"
-                        },
-                        "Status": {
-                            "Type": "I",
-                            "Description": "Departure Scan",
-                            "Code": "DP"
-                        },
-                        "Date": "20200330",
-                        "Time": "201600"
-                    },
-                    {
-                        "ActivityLocation": {
-                            "Address": {
-                                "City": "Panama City",
-                                "StateProvinceCode": "FL",
-                                "CountryCode": "US"
-                            },
-                            "Description": "Front Door"
-                        },
-                        "Status": {
-                            "Type": "I",
-                            "Description": "Origin Scan",
-                            "Code": "OR"
-                        },
-                        "Date": "20200330",
-                        "Time": "183817"
-                    },
-                    {
-                        "ActivityLocation": {
-                            "Address": {
-                                "CountryCode": "US"
-                            },
-                            "Description": "Front Door"
-                        },
-                        "Status": {
-                            "Type": "M",
-                            "Description": "Order Processed: Ready for UPS",
-                            "Code": "MP"
-                        },
-                        "Date": "20200330",
-                        "Time": "154338"
-                    }
-                ],
-                "PackageWeight": {
-                    "UnitOfMeasurement": {
-                        "Code": "LBS"
-                    },
-                    "Weight": "5.30"
-                },
-                "ReferenceNumber": [
-                    {
-                        "Code": "01",
-                        "Value": "BBY01-805700811393"
-                    },
-                    {
-                        "Code": "01",
-                        "Value": "EC"
-                    }
-                ]
-            }
-        },
-        "Disclaimer": "You are using UPS tracking service on customer integration test environment, please switch to UPS production environment once you finish the test. The URL is https://onlinetools.ups.com/webservices/Track"
+            ]
+        }
     }
 }
