@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 import time
 import ast
 import USPS_API
@@ -65,15 +65,7 @@ def updateTableDict(aList, tableDict = {}):
 
 @app.route('/', methods = ['GET', 'POST'])
 def home_page():
-    print("1")
-    today = date.today()
-    if (int(time.strftime("%I:%M")[0:2]) > 12):
-        current_time = str(time.strftime("%I:%M")) + "PM"
-    else:
-        current_time = (str(time.strftime("%I:%M")) + "AM")
-
-    current_dateTime = today.strftime("%m/%d/%y") + " at " + current_time
-    print("2")
+    current_dateTime = datetime.now().strftime("%m/%d/%Y %I:%M:%p")
     try:
         tableDict = updateTableDict(ast.literal_eval(request.cookies.get('table')))
         print("3")
