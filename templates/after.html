@@ -2,8 +2,15 @@
 <html lang = "en">
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
+<script type = "text/javascript">
+    function loading(){
+        document.getElementById("white_box").style.display = 'block';
+        document.getElementById("loading_gif").style.display = 'block';
+        document.getElementById("content").style.filter = 'blur(2px)';
+    }
+</script>
 <style>
+
 table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
@@ -19,56 +26,136 @@ td, th {
 tr:nth-child(even) {
   background-color: #dddddd;
 }
+
+#white_box {
+    display: none;
+    border: 5px solid #696969;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+#loading_gif {
+    display: none;
+    border: 5px solid #696969;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+}
+
+#content {
+    filter: none;
+}
+
+#intro {
+    padding: 3%;
+    background-color: #87CEFA;
+}
+
+#add {
+    display: inline-block;
+}
+
+#remove {
+    display: inline-block;
+}
+
+.forms_container {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 20%;
+    margin-right: 20%;
+    padding: 2%;
+}
+
+#remove_button {
+    display: none;
+}
+
+
 </style>
 
-<h1><center>Track your packages!</center></h1>
-<center>UPS, USPS, or FedEx</center>
+<body>
+    <div id = "white_box">
+        <img src="{{url_for('static', filename='white_pic.png')}}">
+        <div id = "loading_gif">
+            <img src="{{url_for('static', filename='image2.gif')}}"></img>
+            <div align = "center" >Tracking packages...</div>
+        </div>
+    </div>
+    <div id = "content">
+        <div id = "intro">
+            <h1><center>Track Your Packages!</center></h1>
+            <center>UPS, USPS, or FedEx</center>
+        </div>
 
-<form method = "POST">
-        <input type = "text", placeholder = "Add Tracking Number", name = "AddTrackingNum">
-        <input class = "btn btn-primary" type = "submit">
-</form>
-<form method = "POST">
-        <input type = "text", placeholder = "Remove Tracking Number", name = "RemoveTrackingNum">
-        <input class = "btn btn-primary" type = "submit">
-</form>
-<body>Last update: {{current_dateTime}}</body>
-    <div class="container" style="min-height:100% width:80%">
-	{% with messages = get_flashed_messages() %}
-	  {% if messages %}
-	    {% for message in messages %}
-		  <div class="alert alert-warning alert-dismissible" role="alert">
-		  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-			{{message}}
-		  </div>
-		{% endfor %}
-	  {% endif %}
-	{% endwith %}
+        <div class = "forms_container">
+            <div>
+                <form id = "add" method = "POST">
+                        <input type = "text", placeholder = "Add Tracking Number", name = "AddTrackingNum">
+                        <input class = "btn btn-primary" type = "submit", onclick = "loading(); return False;", value = "Add">
+                </form>
+            </div>
+            <div>
+            <form id = "remove" method = "POST">
+                    <input type = "text", placeholder = "Remove Tracking Number", name = "RemoveTrackingNum">
+                    <input class = "btn btn-primary" type = "submit", value = "Remove">
+            </form>
+            </div>
+        </div>
 
-	{% block body %}{% endblock %}
-	</div>
+        <div>
+            <body id = "last_update">Last update: {{current_dateTime}}</body>
+        </div>
+                <div class="container" style="min-height:100% width:80%">
+                {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                    {% for message in messages %}
+                      <div class="alert alert-warning alert-dismissible" role="alert">
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        {{message}}
+                      </div>
+                    {% endfor %}
+                  {% endif %}
+                {% endwith %}
 
-	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-	<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+                {% block body %}{% endblock %}
+                </div>
 
-  <table>
-   <tr>
-    <th>Company</th>
-    <th>Tracking Number</th>
-    <th>Location</th>
-    <th>Status</th>
-    <th>As of </th>
-    <th>Scheduled Delivery Date</th>
-   </tr>
 
-   {%for i in tableDict%}
-   <tr>
-       {%for y in tableDict[i]%}
-         <td>{{y}}</td>
-       {%endfor%}
-     {%endfor%}
-   </tr>
+              <table>
+               <tr>
+                <th>Company</th>
+                <th>Tracking Number</th>
+                <th>Location</th>
+                <th>Status</th>
+                <th>As of </th>
+                <th>Scheduled Delivery Date</th>
+               </tr>
 
-  </table>
+               {%for i in tableDict%}
+               <tr>
+                   <div>
+                       {%for y in tableDict[i]%}
+                         <td>{{y}}</td>
+                       {%endfor%}
+                       <td>
+                           <form id = "remove_button" type = "hidden" method = "POST">
+                               <input type = "text", placeholder = "Remove Tracking Number", name = "RemoveButton", value = {{tableDict[i][1]}}>
+                           </form>
+                           <input form = "remove_button"  class = "btn btn-primary" type = "submit", value = "Remove">
+                       </td>
+                   </div>
+                 {%endfor%}
+               </tr>
+
+              </table>
+        </div>
+
+</body>
 
 </html>

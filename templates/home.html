@@ -3,6 +3,16 @@
 <script type = "text/javascript" src = "tracking.js"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
+<script type = "text/javascript">
+    function loading(){
+        document.getElementById("white_box").style.display = 'block';
+        document.getElementById("loading_gif").style.display = 'block';
+        document.getElementById("content").style.filter = 'blur(1px)';
+    }
+</script>
+
+
+
 <style>
 table {
   font-family: arial, sans-serif;
@@ -19,30 +29,95 @@ td, th {
 tr:nth-child(even) {
   background-color: #dddddd;
 }
+
+#white_box {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+#loading_gif {
+    display: none;
+    border: 5px solid #696969;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+}
+
+#content {
+    filter: none;
+}
+
+#intro {
+    padding: 3%;
+    background-color: #87CEFA;
+}
+
+#add {
+    display: inline-block;
+}
+
+#remove {
+    display: inline-block;
+}
+
+.forms_container {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 20%;
+    margin-right: 20%;
+    padding: 2%;
+}
+
 </style>
 
-<h1><center>Track Your Packages!</center></h1>
-<center>UPS, USPS, or FedEx</center>
+<body>
+    <div id = "white_box">
+        <img src="{{url_for('static', filename='white_pic.png')}}">
+        <div id = "loading_gif">
+            <img src="{{url_for('static', filename='image2.gif')}}"></img>
+            <div align = "center" >Tracking packages...</div>
+        </div>
+    </div>
+    <div id = "content">
+        <div id = "intro">
+            <h1><center>Track Your Packages!</center></h1>
+            <center>UPS, USPS, or FedEx</center>
+        </div>
 
-<form method = "POST">
-        <input type = "text", placeholder = "Add Tracking Number", name = "AddTrackingNum">
-        <input class = "btn btn-primary" type = "submit">
-</form>
+        <div class = "forms_container">
+            <div>
+                <form id = "add" method = "POST">
+                        <input type = "text", placeholder = "Add Tracking Number", name = "AddTrackingNum">
+                        <input class = "btn btn-primary" type = "submit", onclick = "loading(); return False;", value = "Add">
+                </form>
+            </div>
+            <div>
+            <form id = "remove" method = "POST">
+                    <input type = "text", placeholder = "Remove Tracking Number", name = "RemoveTrackingNum">
+                    <input class = "btn btn-primary" type = "submit", value = "Remove">
+            </form>
+            </div>
+        </div>
 
-<form method = "POST">
-        <input type = "text", placeholder = "Remove Tracking Number", name = "RemoveTrackingNum">
-        <input class = "btn btn-primary" type = "submit">
-</form>
-<body>Last update: {{current_dateTime}}</body>
+        <div>
+            <body>Last update: {{current_dateTime}}</body>
+        </div>
 
-<table id = "tbl">
-   <tr>
-        <th>Company</th>
-        <th>Tracking Number</th>
-        <th>Location</th>
-        <th>Status</th>
-        <th>As of </th>
-   </tr>
-  </table>
-
+        <table id = "tbl">
+           <tr>
+                <th>Company</th>
+                <th>Tracking Number</th>
+                <th>Location</th>
+                <th>Status</th>
+                <th>As of </th>
+           </tr>
+        </table>
+    </div>
+</body>
 </html>

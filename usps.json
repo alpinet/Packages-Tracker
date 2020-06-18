@@ -1,50 +1,25 @@
 {
     "TrackResponse": {
         "TrackInfo": {
-            "@ID": "9449010205561009777268",
+            "@ID": "9205590202330875597731",
             "TrackSummary": {
-                "EventTime": "9:26 am",
-                "EventDate": "March 27, 2020",
-                "Event": "Delivered, In/At Mailbox",
-                "EventCity": "SAN GABRIEL",
-                "EventState": "CA",
-                "EventZIPCode": "91775",
+                "EventTime": null,
+                "EventDate": "June 16, 2020",
+                "Event": "In Transit, Arriving On Time",
+                "EventCity": null,
+                "EventState": null,
+                "EventZIPCode": null,
                 "EventCountry": null,
                 "FirmName": null,
                 "Name": null,
-                "AuthorizedAgent": "false",
-                "DeliveryAttributeCode": "01"
+                "AuthorizedAgent": "false"
             },
             "TrackDetail": [
                 {
-                    "EventTime": "7:10 am",
-                    "EventDate": "March 27, 2020",
-                    "Event": "Out for Delivery",
-                    "EventCity": "SAN GABRIEL",
-                    "EventState": "CA",
-                    "EventZIPCode": "91775",
-                    "EventCountry": null,
-                    "FirmName": null,
-                    "Name": null,
-                    "AuthorizedAgent": "false"
-                },
-                {
-                    "EventTime": "4:15 am",
-                    "EventDate": "March 27, 2020",
-                    "Event": "Arrived at Post Office",
-                    "EventCity": "SAN GABRIEL",
-                    "EventState": "CA",
-                    "EventZIPCode": "91778",
-                    "EventCountry": null,
-                    "FirmName": null,
-                    "Name": null,
-                    "AuthorizedAgent": "false"
-                },
-                {
-                    "EventTime": null,
-                    "EventDate": "March 26, 2020",
-                    "Event": "In Transit to Next Facility",
-                    "EventCity": null,
+                    "EventTime": "7:01 pm",
+                    "EventDate": "June 15, 2020",
+                    "Event": "Arrived at USPS Regional Origin Facility",
+                    "EventCity": "WASHINGTON DC NETWORK DISTRIBUTION CENTER",
                     "EventState": null,
                     "EventZIPCode": null,
                     "EventCountry": null,
@@ -54,64 +29,27 @@
                 },
                 {
                     "EventTime": "5:46 pm",
-                    "EventDate": "March 25, 2020",
-                    "Event": "Departed USPS Regional Destination Facility",
-                    "EventCity": "LOS ANGELES CA NETWORK DISTRIBUTION CENTER",
-                    "EventState": null,
-                    "EventZIPCode": null,
-                    "EventCountry": null,
-                    "FirmName": null,
-                    "Name": null,
-                    "AuthorizedAgent": "false"
-                },
-                {
-                    "EventTime": "4:19 pm",
-                    "EventDate": "March 25, 2020",
-                    "Event": "Arrived at USPS Regional Destination Facility",
-                    "EventCity": "LOS ANGELES CA NETWORK DISTRIBUTION CENTER",
-                    "EventState": null,
-                    "EventZIPCode": null,
-                    "EventCountry": null,
-                    "FirmName": null,
-                    "Name": null,
-                    "AuthorizedAgent": "false"
-                },
-                {
-                    "EventTime": "6:25 am",
-                    "EventDate": "March 22, 2020",
-                    "Event": "Arrived at USPS Regional Origin Facility",
-                    "EventCity": "PITTSBURGH PA NETWORK DISTRIBUTION CENTER",
-                    "EventState": null,
-                    "EventZIPCode": null,
-                    "EventCountry": null,
-                    "FirmName": null,
-                    "Name": null,
-                    "AuthorizedAgent": "false"
-                },
-                {
-                    "EventTime": "5:10 am",
-                    "EventDate": "March 22, 2020",
+                    "EventDate": "June 15, 2020",
                     "Event": "Accepted at USPS Origin Facility",
-                    "EventCity": "FERNDALE",
-                    "EventState": "MI",
-                    "EventZIPCode": "48220",
+                    "EventCity": "PERRYMAN",
+                    "EventState": "MD",
+                    "EventZIPCode": "21130",
                     "EventCountry": null,
                     "FirmName": null,
                     "Name": null,
                     "AuthorizedAgent": "false"
                 },
                 {
-                    "EventTime": "1:35 pm",
-                    "EventDate": "March 18, 2020",
-                    "Event": "Shipping Label Created, USPS Awaiting Item",
-                    "EventCity": "FERNDALE",
-                    "EventState": "MI",
-                    "EventZIPCode": "48220",
+                    "EventTime": null,
+                    "EventDate": "June 15, 2020",
+                    "Event": "Pre-Shipment Info Sent to USPS, USPS Awaiting Item",
+                    "EventCity": null,
+                    "EventState": null,
+                    "EventZIPCode": null,
                     "EventCountry": null,
                     "FirmName": null,
                     "Name": null,
-                    "AuthorizedAgent": "false",
-                    "DeliveryAttributeCode": "33"
+                    "AuthorizedAgent": "false"
                 }
             ]
         }

@@ -83,6 +83,4 @@ def UPS_estimated_delivery_date(tracking_number_input):
         return "Completed delivery on ", current_dateTime(tracking_number_input)
 
 start_time = time.time()
-print(current_city("1ZRA15530376445450") + current_time("1ZRA15530376445450") + current_country("1ZRA15530376445450") + current_date("1ZRA15530376445450")
-      + current_dateTime("1ZRA15530376445450") + current_state("1ZRA15530376445450") + current_status_description("1ZRA15530376445450") + current_zipCode("1ZRA15530376445450"))
-print("--- %s seconds ---" % (time.time() - start_time))
+

@@ -20,19 +20,20 @@ def UPS_list(trackingNum):
     status = str(UPS_API.current_status_description(trackingNum))
     dateTime = str(UPS_API.current_date(trackingNum)) + " at " + str(UPS_API.current_time(trackingNum))
     if (status != "Delivered"):
-        return [company, trackingNum, location, status, dateTime, UPS_API.UPS_estimated_delivery_date(trackingNum)]
+        return [company, trackingNum, location, status, dateTime, UPS_API.UPS_estimated_delivery_date(trackingNum),"" ]
     else:
-        return [company, trackingNum, location, status, dateTime, "Completed on " + dateTime]
+        return [company, trackingNum, location, status, dateTime, "Completed on " + dateTime, ""]
 
 def USPS_list(trackingNum):
     company = "USPS"
     location = str(USPS_API.current_city(trackingNum)) + ", " + str(USPS_API.current_state(trackingNum)) + " " + str(USPS_API.current_zipcode(trackingNum))
     status = USPS_API.current_status(trackingNum)
     dateTime = str(USPS_API.current_dateTime(trackingNum))
+    expected = str(USPS_API.expected_delivery_date(trackingNum))
     if ("Delivered" in status):
         return [company, trackingNum, location, status, dateTime, "Completed on " + dateTime]
     else:
-        return [company, trackingNum, location, status, dateTime, "NEED TO FIX THIS"]
+        return [company, trackingNum, location, status, dateTime, expected]
 
 def FedEx_list(trackingNum):
     return FedEx_API.setUpDriver(trackingNum)
@@ -74,38 +75,49 @@ def home_page():
     except:
         tableDict = {}
         tableDictKeys = []
-    if request.method == 'POST' and ("AddTrackingNum" in request.form):
-        trackingNum = request.form['AddTrackingNum']
-        if (len(request.form['AddTrackingNum']) == 18):
-            try:
-                tableDict[trackingNum] = UPS_list(trackingNum)
-            except:
-                flash("Invalid UPS Tracking Number")
-        elif (len(request.form['AddTrackingNum']) == 22):
-            try:
-                tableDict[trackingNum] = USPS_list(trackingNum)
-            except:
-                flash("Invalid USPS Tracking Number")
-        elif (len(request.form['AddTrackingNum']) == 12):
-            try:
-                tableDict[trackingNum] = FedEx_list(trackingNum)
-            except:
-                flash("Invalid FedEx Tracking Number")
-        else:
-            flash("Invalid Tracking Number; Must be UPS, USPS, or FedEx")
-        tableDictKeys.append(trackingNum)
+    if request.method == 'POST':
+        if "AddTrackingNum" in request.form:
+            trackingNum = request.form['AddTrackingNum']
+            if (len(request.form['AddTrackingNum']) == 18):
+                try:
+                    tableDict[trackingNum] = UPS_list(trackingNum)
+                except:
+                    flash("Invalid UPS Tracking Number")
+            elif (len(request.form['AddTrackingNum']) == 22):
+                try:
+                    tableDict[trackingNum] = USPS_list(trackingNum)
+                except:
+                    flash("Invalid USPS Tracking Number")
+            elif (len(request.form['AddTrackingNum']) == 12):
+                try:
+                    tableDict[trackingNum] = FedEx_list(trackingNum)
+                except:
+                    flash("Invalid FedEx Tracking Number")
+            else:
+                flash("Invalid Tracking Number; Must be UPS, USPS, or FedEx")
+            tableDictKeys.append(trackingNum)
 
-        resp = make_response(render_template('after.html', tableDict=tableDict, current_dateTime=current_dateTime))
-        resp.set_cookie('table', str(tableDictKeys))
-        return resp
-    elif request.method == 'POST' and ("RemoveTrackingNum" in request.form):
-        trackingNum = request.form['RemoveTrackingNum']
-        del tableDict[trackingNum]
-        tableDictKeys.remove(trackingNum)
+            resp = make_response(render_template('after.html', tableDict=tableDict, current_dateTime=current_dateTime))
+            resp.set_cookie('table', str(tableDictKeys))
+            return resp
+        elif "RemoveTrackingNum" in request.form:
+            trackingNum = request.form['RemoveTrackingNum']
+            print(trackingNum)
+            del tableDict[trackingNum]
+            tableDictKeys.remove(trackingNum)
 
-        resp = make_response(render_template('after.html', tableDict=tableDict, current_dateTime=current_dateTime))
-        resp.set_cookie('table', str(tableDictKeys))
-        return resp
+            resp = make_response(render_template('after.html', tableDict=tableDict, current_dateTime=current_dateTime))
+            resp.set_cookie('table', str(tableDictKeys))
+            return resp
+        elif "RemoveButton" in request.form:
+            trackingNum = request.form['RemoveButton']
+            print(trackingNum)
+            del tableDict[trackingNum]
+            tableDictKeys.remove(trackingNum)
+
+            resp = make_response(render_template('after.html', tableDict=tableDict, current_dateTime=current_dateTime))
+            resp.set_cookie('table', str(tableDictKeys))
+            return resp
     else:
         if 'table' in request.cookies:
             return render_template('after.html',tableDict= updateTableDict(ast.literal_eval(request.cookies.get('table'))),current_dateTime=current_dateTime)
