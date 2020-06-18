@@ -29,7 +29,6 @@ tr:nth-child(even) {
 
 #white_box {
     display: none;
-    border: 5px solid #696969;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -39,7 +38,7 @@ tr:nth-child(even) {
 
 #loading_gif {
     display: none;
-    border: 5px solid #696969;
+    border: 10px solid #696969;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -56,21 +55,13 @@ tr:nth-child(even) {
     background-color: #87CEFA;
 }
 
-#add {
-    display: inline-block;
-}
-
-#remove {
-    display: inline-block;
-}
-
-.forms_container {
-    display: flex;
-    justify-content: space-between;
-    margin-left: 20%;
-    margin-right: 20%;
+#add_css {
     padding: 2%;
+    text-align: center;
+    display: inline-block;
+    width: 100%;
 }
+
 
 #remove_button {
     display: none;
@@ -93,19 +84,11 @@ tr:nth-child(even) {
             <center>UPS, USPS, or FedEx</center>
         </div>
 
-        <div class = "forms_container">
-            <div>
-                <form id = "add" method = "POST">
-                        <input type = "text", placeholder = "Add Tracking Number", name = "AddTrackingNum">
-                        <input class = "btn btn-primary" type = "submit", onclick = "loading(); return False;", value = "Add">
-                </form>
-            </div>
-            <div>
-            <form id = "remove" method = "POST">
-                    <input type = "text", placeholder = "Remove Tracking Number", name = "RemoveTrackingNum">
-                    <input class = "btn btn-primary" type = "submit", value = "Remove">
+        <div id = "add_css">
+            <form id = "add" method = "POST">
+                    <input type = "text", placeholder = "Add Tracking Number", name = "AddTrackingNum">
+                    <input class = "btn btn-primary" type = "submit", onclick = "loading(); return False;", value = "Add">
             </form>
-            </div>
         </div>
 
         <div>
@@ -145,9 +128,9 @@ tr:nth-child(even) {
                        {%endfor%}
                        <td>
                            <form id = "remove_button" type = "hidden" method = "POST">
-                               <input type = "text", placeholder = "Remove Tracking Number", name = "RemoveButton", value = {{tableDict[i][1]}}>
+                               <input type = "text", placeholder = "Remove Tracking Number", name = "RemoveTrackingNum", value = {{tableDict[i][1]}}>
                            </form>
-                           <input form = "remove_button"  class = "btn btn-primary" type = "submit", value = "Remove">
+                           <input form = "remove_button"  class = "btn btn-danger" type = "submit", value = "Remove">
                        </td>
                    </div>
                  {%endfor%}

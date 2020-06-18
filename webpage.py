@@ -109,15 +109,6 @@ def home_page():
             resp = make_response(render_template('after.html', tableDict=tableDict, current_dateTime=current_dateTime))
             resp.set_cookie('table', str(tableDictKeys))
             return resp
-        elif "RemoveButton" in request.form:
-            trackingNum = request.form['RemoveButton']
-            print(trackingNum)
-            del tableDict[trackingNum]
-            tableDictKeys.remove(trackingNum)
-
-            resp = make_response(render_template('after.html', tableDict=tableDict, current_dateTime=current_dateTime))
-            resp.set_cookie('table', str(tableDictKeys))
-            return resp
     else:
         if 'table' in request.cookies:
             return render_template('after.html',tableDict= updateTableDict(ast.literal_eval(request.cookies.get('table'))),current_dateTime=current_dateTime)

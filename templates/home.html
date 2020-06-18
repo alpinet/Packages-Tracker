@@ -58,20 +58,11 @@ tr:nth-child(even) {
     background-color: #87CEFA;
 }
 
-#add {
-    display: inline-block;
-}
-
-#remove {
-    display: inline-block;
-}
-
-.forms_container {
-    display: flex;
-    justify-content: space-between;
-    margin-left: 20%;
-    margin-right: 20%;
+#add_css {
     padding: 2%;
+    text-align: center;
+    display: inline-block;
+    width: 100%;
 }
 
 </style>
@@ -90,19 +81,11 @@ tr:nth-child(even) {
             <center>UPS, USPS, or FedEx</center>
         </div>
 
-        <div class = "forms_container">
-            <div>
-                <form id = "add" method = "POST">
-                        <input type = "text", placeholder = "Add Tracking Number", name = "AddTrackingNum">
-                        <input class = "btn btn-primary" type = "submit", onclick = "loading(); return False;", value = "Add">
-                </form>
-            </div>
-            <div>
-            <form id = "remove" method = "POST">
-                    <input type = "text", placeholder = "Remove Tracking Number", name = "RemoveTrackingNum">
-                    <input class = "btn btn-primary" type = "submit", value = "Remove">
+        <div id = "add_css">
+            <form id = "add" method = "POST">
+                    <input type = "text", placeholder = "Add Tracking Number", name = "AddTrackingNum">
+                    <input class = "btn btn-primary" type = "submit", onclick = "loading(); return False;", value = "Add">
             </form>
-            </div>
         </div>
 
         <div>
