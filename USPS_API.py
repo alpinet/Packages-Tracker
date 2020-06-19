@@ -51,17 +51,20 @@ def current_dateTime(trackingNum):
 
 
 def expected_delivery_date(trackingNum,check = 0):
-    options = Options()
-    options.add_argument("--headless")
-    driver = webdriver.Chrome("/Users/josephtang/PycharmProjects/FirstSeleniumTest/drivers/chromedriver",options=options)
+    try:
+        options = Options()
+        options.add_argument("--headless")
+        driver = webdriver.Chrome("/Users/josephtang/PycharmProjects/FirstSeleniumTest/drivers/chromedriver",options=options)
 
-    driver.get("https://tools.usps.com/go/TrackConfirmAction?qtc_tLabels1=" + trackingNum)
-    wait = WebDriverWait(driver, 10)
+        driver.get("https://tools.usps.com/go/TrackConfirmAction?qtc_tLabels1=" + trackingNum)
+        wait = WebDriverWait(driver, 10)
 
-    men_menu = wait.until(EC.visibility_of_element_located((By.XPATH, "//*[@id='tracked-numbers']/div/div/div/div/div[1]/div[1]/h2/span/span[1]/strong")))
-    day = driver.find_element_by_xpath(("//*[@id='tracked-numbers']/div/div/div/div/div[1]/div[1]/h2/span/span[1]/strong")).text
-    month_year = driver.find_element_by_xpath('//*[@id="tracked-numbers"]/div/div/div/div/div[1]/div[1]/h2/span/span[1]/span').text
-    time = driver.find_element_by_xpath('//*[@id="tracked-numbers"]/div/div/div/div/div[1]/div[1]/h2/span/span[2]/span/strong').text
-    month_year_list = month_year.split()
+        men_menu = wait.until(EC.visibility_of_element_located((By.XPATH, "//*[@id='tracked-numbers']/div/div/div/div/div[1]/div[1]/h2/span/span[1]/strong")))
+        day = driver.find_element_by_xpath(("//*[@id='tracked-numbers']/div/div/div/div/div[1]/div[1]/h2/span/span[1]/strong")).text
+        month_year = driver.find_element_by_xpath('//*[@id="tracked-numbers"]/div/div/div/div/div[1]/div[1]/h2/span/span[1]/span').text
+        time = driver.find_element_by_xpath('//*[@id="tracked-numbers"]/div/div/div/div/div[1]/div[1]/h2/span/span[2]/span/strong').text
+        month_year_list = month_year.split()
 
-    return str(month_year_list[0]) + " " + str(day) + " " + str(month_year_list[1]) + " by " + str(time)
+        return str(month_year_list[0]) + " " + str(day) + " " + str(month_year_list[1]) + " by " + str(time)
+    except:
+        return (str("Completed delivery on ") +  str(current_dateTime(trackingNum)))

@@ -82,5 +82,3 @@ def UPS_estimated_delivery_date(tracking_number_input):
     except:
         return "Completed delivery on ", current_dateTime(tracking_number_input)
 
-start_time = time.time()
-
