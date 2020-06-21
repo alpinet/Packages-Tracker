@@ -11,10 +11,10 @@ def get_json_dict(tracking_number_input):
         "UPSSecurity": {
             "UsernameToken": {
                 "Username": "alpinetang26",
-                "Password": "lakerzRgood23601!"
+                "Password": "********"
             },
             "ServiceAccessToken": {
-                "AccessLicenseNumber": "CD732771103FDC95"
+                "AccessLicenseNumber": "********"
             }
         },
         "TrackRequest": {
