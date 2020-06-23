@@ -6,18 +6,16 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
-from pass_keys import USPS_num
 import os
 
 usps = USPSApi(os.environ.get('USPS_num'))
-track = usps.track("9205590202330875597731")
 #9200190246573223291412 crystals track
 #9500126510460081342890 vivians track
 #9374869903504598954074 michelle's track
 #9449010205561009777268 caleb's track
 #print(type(track.result))
-with open('usps.json', 'w') as outfile:
-    json.dump(track.result, outfile, indent=4)
+#with open('usps.json', 'w') as outfile:
+#    json.dump(track.result, outfile, indent=4)
 def current_time(trackingNum):
     if (usps.track(trackingNum).result["TrackResponse"]["TrackInfo"]["TrackSummary"]["EventTime"]) == None:
            return ""
