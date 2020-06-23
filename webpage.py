@@ -27,9 +27,9 @@ def UPS_list(trackingNum):
     status = str(UPS_API.current_status_description(trackingNum))
     dateTime = str(UPS_API.current_date(trackingNum)) + " at " + str(UPS_API.current_time(trackingNum))
     if (status != "Delivered"):
-        return [company, trackingNum, location, status, dateTime, UPS_API.UPS_estimated_delivery_date(trackingNum),"" ]
+        return [company, trackingNum, location, status, dateTime, UPS_API.UPS_estimated_delivery_date(trackingNum)]
     else:
-        return [company, trackingNum, location, status, dateTime, "Completed on " + dateTime, ""]
+        return [company, trackingNum, location, status, dateTime, "Completed on " + dateTime]
 
 def USPS_list(trackingNum):
     company = "USPS"
@@ -38,9 +38,9 @@ def USPS_list(trackingNum):
     dateTime = str(USPS_API.current_dateTime(trackingNum))
     expected = str(USPS_API.expected_delivery_date(trackingNum))
     if ("Delivered" in status):
-        return [company, trackingNum, location, status, dateTime, "Completed on " + dateTime, ""]
+        return [company, trackingNum, location, status, dateTime, "Completed on " + dateTime]
     else:
-        return [company, trackingNum, location, status, dateTime, expected, ""]
+        return [company, trackingNum, location, status, dateTime, expected]
 
 def FedEx_list(trackingNum):
     return FedEx_API.setUpDriver(trackingNum)
