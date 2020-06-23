@@ -67,6 +67,10 @@ def current_dateTime(tracking_number_input):
 
 def UPS_estimated_delivery_date(tracking_number_input, driver):
     try:
+        options = Options()
+        options.add_argument("--headless")
+        driver = webdriver.Chrome("/Users/josephtang/PycharmProjects/FirstSeleniumTest/drivers/chromedriver",
+                                  options=options)
         driver.get("https://www.ups.com/track?loc=en_US&tracknum=" + tracking_number_input + "&requester=MB/trackdetails")
         wait = WebDriverWait(driver, 10)
         men_menu = wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="stApp_scheduledDeliveryDay"]')))

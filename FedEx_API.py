@@ -9,6 +9,9 @@ import time
 #391425387258
 
 def setUpDriver(trackingNum, driver, check = 0):
+    options = Options()
+    options.add_argument("--headless")
+    driver = webdriver.Chrome("/Users/josephtang/PycharmProjects/FirstSeleniumTest/drivers/chromedriver", options=options)
     driver.get("https://www.fedex.com/apps/fedextrack/index.html?tracknumbers=" + trackingNum + "&cntry_code=us")
     wait = WebDriverWait(driver, 10)
     men_menu = wait.until(EC.visibility_of_element_located((By.XPATH, "//*[@id='container']/div/div/div[2]/div/div[1]/div[2]/div[3]/div/div[3]/div/div[1]/div/div[2]/div[5]/div/h3[3]")))

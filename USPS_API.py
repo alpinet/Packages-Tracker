@@ -52,6 +52,10 @@ def current_dateTime(trackingNum):
 
 def expected_delivery_date(trackingNum, driver, check = 0):
     try:
+        options = Options()
+        options.add_argument("--headless")
+        driver = webdriver.Chrome("/Users/josephtang/PycharmProjects/FirstSeleniumTest/drivers/chromedriver",
+                                  options=options)
         driver.get("https://tools.usps.com/go/TrackConfirmAction?qtc_tLabels1=" + trackingNum)
         wait = WebDriverWait(driver, 10)
 
