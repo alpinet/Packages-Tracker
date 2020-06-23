@@ -7,8 +7,9 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from pass_keys import USPS_num
+import os
 
-usps = USPSApi(USPS_num)
+usps = USPSApi(os.environ.get('USPS_num'))
 track = usps.track("9205590202330875597731")
 #9200190246573223291412 crystals track
 #9500126510460081342890 vivians track
