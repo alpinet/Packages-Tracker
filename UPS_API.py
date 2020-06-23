@@ -5,15 +5,16 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+from pass_keys import username, password, access_num
 def get_json_dict(tracking_number_input):
     data = {
         "UPSSecurity": {
             "UsernameToken": {
-                "Username": "alpinetang26",
-                "Password": "********"
+                "Username": username,
+                "Password": password
             },
             "ServiceAccessToken": {
-                "AccessLicenseNumber": "********"
+                "AccessLicenseNumber": access_num
             }
         },
         "TrackRequest": {
