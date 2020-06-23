@@ -1,4 +1,6 @@
 from datetime import datetime, timezone
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 import time
 import ast
 import USPS_API
@@ -9,6 +11,11 @@ import os
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
+def create_driver():
+    options = Options()
+    options.add_argument("--headless")
+    driver = webdriver.Chrome("/Users/josephtang/PycharmProjects/FirstSeleniumTest/drivers/chromedriver", options=options)
+    return driver
 
 def UPS_list(trackingNum):
     company = "UPS"
@@ -20,7 +27,7 @@ def UPS_list(trackingNum):
     status = str(UPS_API.current_status_description(trackingNum))
     dateTime = str(UPS_API.current_date(trackingNum)) + " at " + str(UPS_API.current_time(trackingNum))
     if (status != "Delivered"):
-        return [company, trackingNum, location, status, dateTime, UPS_API.UPS_estimated_delivery_date(trackingNum),"" ]
+        return [company, trackingNum, location, status, dateTime, UPS_API.UPS_estimated_delivery_date(trackingNum, driver),"" ]
     else:
         return [company, trackingNum, location, status, dateTime, "Completed on " + dateTime, ""]
 
@@ -29,43 +36,30 @@ def USPS_list(trackingNum):
     location = str(USPS_API.current_city(trackingNum)) + ", " + str(USPS_API.current_state(trackingNum)) + " " + str(USPS_API.current_zipcode(trackingNum))
     status = USPS_API.current_status(trackingNum)
     dateTime = str(USPS_API.current_dateTime(trackingNum))
-    expected = str(USPS_API.expected_delivery_date(trackingNum))
+    expected = str(USPS_API.expected_delivery_date(trackingNum, driver))
     if ("Delivered" in status):
-        return [company, trackingNum, location, status, dateTime, "Completed on " + dateTime]
+        return [company, trackingNum, location, status, dateTime, "Completed on " + dateTime, ""]
     else:
-        return [company, trackingNum, location, status, dateTime, expected]
+        return [company, trackingNum, location, status, dateTime, expected, ""]
 
 def FedEx_list(trackingNum):
-    return FedEx_API.setUpDriver(trackingNum)
+    return FedEx_API.setUpDriver(trackingNum, driver)
 
-def updateTableDict(aList, tableDict = {}):
-    empty_dict = {}
-    for item in aList:
-        if len(item) == 18: #UPS
-            try:
-                if(UPS_API.current_dateTime(item) != tableDict[item][4]):
-                    empty_dict[item] = UPS_list(item)
-                else:
-                    empty_dict[item] = tableDict[item]
-            except:
-                empty_dict[item] = UPS_list(item)
-        if len(item) == 22: #USPS
-            try:
-                if(USPS_API.current_dateTime != tableDict[item][4]):
-                    empty_dict[item] = USPS_list(item)
-                else:
-                    empty_dict[item] = tableDict[item]
-            except:
-                empty_dict[item] = USPS_list(item)
-        if len(item) == 12: #FEDEX
-            try:
-                empty_dict[item] = FedEx_list(item)
-            except:
-                empty_dict[item] = FedEx_list(item)
-    return empty_dict
+def updateTableDict(aDict, tableDict = {}):
+    print(str(aDict))
+    for item in aDict:
+        if "Completed" not in aDict[item]:
+            if len(item) == 18: #UPS
+                aDict[item] = UPS_list(item)
+            if len(item) == 22: #USPS
+                aDict[item] = USPS_list(item)
+            if len(item) == 12: #FEDEX
+                aDict[item] = FedEx_list(item)
+    return aDict
 
 @app.route('/', methods = ['GET', 'POST'])
 def home_page():
+    print("1")
     local_time = str(datetime.now(timezone.utc).astimezone())
     current_date = str(local_time[5:7]) + "/" + str(local_time[8:10]) + "/" + str(local_time[0:4])
     if int(local_time[11:13]) > 12:
@@ -73,18 +67,18 @@ def home_page():
     else:
         current_time = str(int(local_time[11:13])) + ":" + str(local_time[14:16]) + " AM"
     current_dateTime = current_date + " " + current_time
+    print("2")
     try:
         tableDict = updateTableDict(ast.literal_eval(request.cookies.get('table')))
-        print("3")
-        tableDictKeys = ast.literal_eval(request.cookies.get('table'))
-        print("4")
     except:
         tableDict = {}
-        tableDictKeys = []
+    print("3")
     if request.method == 'POST':
         if "AddTrackingNum" in request.form:
             trackingNum = request.form['AddTrackingNum']
-            if (len(request.form['AddTrackingNum']) == 18):
+            if trackingNum in tableDict:
+                flash("Tracking number already in the table.")
+            elif (len(request.form['AddTrackingNum']) == 18):
                 try:
                     tableDict[trackingNum] = UPS_list(trackingNum)
                 except:
@@ -101,19 +95,14 @@ def home_page():
                     flash("Invalid FedEx Tracking Number")
             else:
                 flash("Invalid Tracking Number; Must be UPS, USPS, or FedEx")
-            tableDictKeys.append(trackingNum)
-
             resp = make_response(render_template('after.html', tableDict=tableDict, current_dateTime=current_dateTime))
-            resp.set_cookie('table', str(tableDictKeys))
+            resp.set_cookie('table', str(tableDict))
             return resp
         elif "RemoveTrackingNum" in request.form:
             trackingNum = request.form['RemoveTrackingNum']
-            print(trackingNum)
             del tableDict[trackingNum]
-            tableDictKeys.remove(trackingNum)
-
             resp = make_response(render_template('after.html', tableDict=tableDict, current_dateTime=current_dateTime))
-            resp.set_cookie('table', str(tableDictKeys))
+            resp.set_cookie('table', str(tableDict))
             return resp
     else:
         if 'table' in request.cookies:
@@ -123,4 +112,5 @@ def home_page():
 
 
 if __name__ == "__main__":
+    driver = create_driver()
     app.run(debug=False)
