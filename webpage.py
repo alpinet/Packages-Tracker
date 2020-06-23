@@ -17,7 +17,7 @@ def create_driver():
     driver = webdriver.Chrome("/Users/josephtang/PycharmProjects/FirstSeleniumTest/drivers/chromedriver", options=options)
     return driver
 
-def UPS_list(trackingNum, driver):
+def UPS_list(trackingNum):
     company = "UPS"
     try:
         location = str(UPS_API.current_city(trackingNum)) + ", " + str(UPS_API.current_state(trackingNum)) + " " + str(
@@ -27,23 +27,23 @@ def UPS_list(trackingNum, driver):
     status = str(UPS_API.current_status_description(trackingNum))
     dateTime = str(UPS_API.current_date(trackingNum)) + " at " + str(UPS_API.current_time(trackingNum))
     if (status != "Delivered"):
-        return [company, trackingNum, location, status, dateTime, UPS_API.UPS_estimated_delivery_date(trackingNum, driver),"" ]
+        return [company, trackingNum, location, status, dateTime, UPS_API.UPS_estimated_delivery_date(trackingNum),"" ]
     else:
         return [company, trackingNum, location, status, dateTime, "Completed on " + dateTime, ""]
 
-def USPS_list(trackingNum, driver):
+def USPS_list(trackingNum):
     company = "USPS"
     location = str(USPS_API.current_city(trackingNum)) + ", " + str(USPS_API.current_state(trackingNum)) + " " + str(USPS_API.current_zipcode(trackingNum))
     status = USPS_API.current_status(trackingNum)
     dateTime = str(USPS_API.current_dateTime(trackingNum))
-    expected = str(USPS_API.expected_delivery_date(trackingNum, driver))
+    expected = str(USPS_API.expected_delivery_date(trackingNum))
     if ("Delivered" in status):
         return [company, trackingNum, location, status, dateTime, "Completed on " + dateTime, ""]
     else:
         return [company, trackingNum, location, status, dateTime, expected, ""]
 
-def FedEx_list(trackingNum, driver):
-    return FedEx_API.setUpDriver(trackingNum, driver)
+def FedEx_list(trackingNum):
+    return FedEx_API.setUpDriver(trackingNum)
 
 def updateTableDict(aDict, tableDict = {}):
     print(str(aDict))
@@ -75,23 +75,24 @@ def home_page():
     print("3")
     if request.method == 'POST':
         if "AddTrackingNum" in request.form:
-            driver = create_driver()
             trackingNum = request.form['AddTrackingNum']
             if trackingNum in tableDict:
                 flash("Tracking number already in the table.")
             elif (len(request.form['AddTrackingNum']) == 18):
                 try:
-                    tableDict[trackingNum] = UPS_list(trackingNum, driver)
-                except:
+                    tableDict[trackingNum] = UPS_list(trackingNum)
+                except Exception as e:
+                    print(e)
                     flash("Invalid UPS Tracking Number")
             elif (len(request.form['AddTrackingNum']) == 22):
                 try:
-                    tableDict[trackingNum] = USPS_list(trackingNum,driver)
-                except:
+                    tableDict[trackingNum] = USPS_list(trackingNum)
+                except Exception as e:
+                    print(e)
                     flash("Invalid USPS Tracking Number")
             elif (len(request.form['AddTrackingNum']) == 12):
                 try:
-                    tableDict[trackingNum] = FedEx_list(trackingNum, driver)
+                    tableDict[trackingNum] = FedEx_list(trackingNum)
                 except:
                     flash("Invalid FedEx Tracking Number")
             else:

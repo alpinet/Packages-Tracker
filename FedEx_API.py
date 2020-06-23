@@ -8,7 +8,7 @@ import time
 
 #391425387258
 
-def setUpDriver(trackingNum, driver, check = 0):
+def setUpDriver(trackingNum, check = 0):
     options = Options()
     options.add_argument("--headless")
     driver = webdriver.Chrome("/Users/josephtang/PycharmProjects/FirstSeleniumTest/drivers/chromedriver", options=options)
