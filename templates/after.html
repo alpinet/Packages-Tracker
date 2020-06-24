@@ -8,6 +8,12 @@
         document.getElementById("loading_gif").style.display = 'block';
         document.getElementById("content").style.filter = 'blur(2px)';
     }
+
+    function updating(){
+        document.getElementById("updating_box").style.display = 'block';
+        document.getElementById("loading_gif2").style.display = 'block';
+        document.getElementById("content").style.filter = 'blur(2px)';
+    }
 </script>
 <style>
 
@@ -27,7 +33,7 @@ tr:nth-child(even) {
   background-color: #dddddd;
 }
 
-#white_box {
+#white_box, #updating_box {
     display: none;
     position: absolute;
     top: 50%;
@@ -36,7 +42,7 @@ tr:nth-child(even) {
     z-index: 10;
 }
 
-#loading_gif {
+#loading_gif, #loading_gif2 {
     display: none;
     border: 10px solid #696969;
     position: absolute;
@@ -56,7 +62,7 @@ tr:nth-child(even) {
 }
 
 #add_css {
-    padding: 2%;
+    padding: 2.5%;
     text-align: center;
     display: inline-block;
     width: 100%;
@@ -67,6 +73,14 @@ tr:nth-child(even) {
     display: none;
 }
 
+#update_button {
+    display: none;
+    left: 25%;
+}
+
+#updating_text, #tracking_text {
+    font-size: 200%;
+}
 
 </style>
 
@@ -75,7 +89,14 @@ tr:nth-child(even) {
         <img src="{{url_for('static', filename='white_pic.png')}}">
         <div id = "loading_gif">
             <img src="{{url_for('static', filename='image2.gif')}}"></img>
-            <div align = "center" >Tracking packages...</div>
+            <div id = "tracking_text" align = "center" >Tracking packages...</div>
+        </div>
+    </div>
+    <div id = "updating_box">
+        <img src="{{url_for('static', filename='white_pic.png')}}">
+        <div id = "loading_gif2">
+            <img src="{{url_for('static', filename='image2.gif')}}"></img>
+            <div id = "updating_text" align = "center" >Updating...</div>
         </div>
     </div>
     <div id = "content">
@@ -91,8 +112,15 @@ tr:nth-child(even) {
             </form>
         </div>
 
+        <div id = "update">
+            <form id = "update_button" type = "hidden" method = "POST">
+                <input type = "text", placeholder = "update", name = "update">
+            </form>
+            <input form = "update_button"  class = "btn btn-warning" type = "submit", value = "Update All" onclick="updating(); return False;">
+        </div>
+
         <div>
-            <body id = "last_update">Last update: {{current_dateTime}}</body>
+            <body id = "last_update">Last all updated: {{current_dateTime}}</body>
         </div>
                 <div class="container" style="min-height:100% width:80%">
                 {% with messages = get_flashed_messages() %}

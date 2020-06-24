@@ -6,12 +6,16 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 import os
+import json
+
 def get_json_dict(tracking_number_input):
     data = {
         "UPSSecurity": {
             "UsernameToken": {
-                "Username": os.environ.get('username'),
+                "Username": os.environ.get('username')
+,
                 "Password": os.environ.get('password')
+
             },
             "ServiceAccessToken": {
                 "AccessLicenseNumber": os.environ.get('access_num')
@@ -29,8 +33,8 @@ def get_json_dict(tracking_number_input):
     }
     r = requests.post(url="https://wwwcie.ups.com/rest/Track", json=data)
     return r
-#with open('usps.json', 'w') as outfile:
-#    json.dump(get_json_dict("1ZRA15530376445450").json(), outfile, indent=4)
+with open('usps.json', 'w') as outfile:
+    json.dump(get_json_dict("1ZRA15530376445450").json(), outfile, indent=4)
 def current_city(tracking_number_input):
     return(get_json_dict(tracking_number_input).json()["TrackResponse"]["Shipment"]["Package"]["Activity"][0]["ActivityLocation"]["Address"][
               "City"])

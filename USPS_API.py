@@ -7,7 +7,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 import os
-
 usps = USPSApi(os.environ.get('USPS_num'))
 #9200190246573223291412 crystals track
 #9500126510460081342890 vivians track
@@ -16,6 +15,36 @@ usps = USPSApi(os.environ.get('USPS_num'))
 #print(type(track.result))
 #with open('usps.json', 'w') as outfile:
 #    json.dump(track.result, outfile, indent=4)
+
+def get_info(trackingNum):
+    tracking_results = usps.track(trackingNum).result
+    print(tracking_results)
+    if (tracking_results["TrackResponse"]["TrackInfo"]["TrackSummary"]["EventTime"]) == None:
+           current_time = ""
+    else:
+        current_time = tracking_results["TrackResponse"]["TrackInfo"]["TrackSummary"]["EventTime"]
+    current_date = tracking_results["TrackResponse"]["TrackInfo"]["TrackSummary"]["EventDate"]
+    current_status = tracking_results["TrackResponse"]["TrackInfo"]["TrackSummary"]["Event"]
+    if (tracking_results["TrackResponse"]["TrackInfo"]["TrackSummary"]["EventCity"]) == None:
+        current_city = "Last location: " + (usps.track(trackingNum).result["TrackResponse"]["TrackInfo"]["TrackDetail"][0]["EventCity"])
+    else:
+        current_city = tracking_results["TrackResponse"]["TrackInfo"]["TrackSummary"]["EventCity"]
+    if (tracking_results["TrackResponse"]["TrackInfo"]["TrackSummary"]["EventState"]) == None:
+        current_state = ""
+    else:
+        current_state = tracking_results["TrackResponse"]["TrackInfo"]["TrackDetail"][0]["EventState"]
+    if (tracking_results["TrackResponse"]["TrackInfo"]["TrackSummary"]["EventZIPCode"]) == None:
+        current_zipcode = ""
+    else:
+       current_zipcode = tracking_results["TrackResponse"]["TrackInfo"]["TrackSummary"]["EventZIPCode"]
+    if (current_time == ""):
+        current_dateTime = current_date
+    else:
+        current_dateTime = str(current_date) + " at " + str(current_time)
+    current_location = str(current_city) + ", " + str(current_state) + " " + str(current_zipcode)
+    return ["FedEx", trackingNum, current_location, current_status, current_dateTime]
+'''
+
 def current_time(trackingNum):
     if (usps.track(trackingNum).result["TrackResponse"]["TrackInfo"]["TrackSummary"]["EventTime"]) == None:
            return ""
@@ -42,14 +71,16 @@ def current_zipcode(trackingNum):
         return ""
     return (usps.track(trackingNum).result["TrackResponse"]["TrackInfo"]["TrackSummary"]["EventZIPCode"])
 
+
 def current_dateTime(trackingNum):
     if (current_time(trackingNum) == ""):
         return current_date(trackingNum)
     else:
         return str(current_date(trackingNum)) + " at " + str(current_time(trackingNum))
 
+'''
 
-def expected_delivery_date(trackingNum, check = 0):
+def expected_delivery_date(trackingNum, current_dateTime, check = 0):
     try:
         options = Options()
         options.add_argument("--headless")
@@ -66,4 +97,5 @@ def expected_delivery_date(trackingNum, check = 0):
 
         return str(month_year_list[0]) + " " + str(day) + " " + str(month_year_list[1]) + " by " + str(time)
     except:
-        return (str("Completed delivery on ") +  str(current_dateTime(trackingNum)))
+        return (str("Completed delivery on ") +  str(current_dateTime))
+
