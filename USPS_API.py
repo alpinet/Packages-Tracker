@@ -43,42 +43,6 @@ def get_info(trackingNum):
         current_dateTime = str(current_date) + " at " + str(current_time)
     current_location = str(current_city) + ", " + str(current_state) + " " + str(current_zipcode)
     return ["USPS", trackingNum, current_location, current_status, current_dateTime]
-'''
-
-def current_time(trackingNum):
-    if (usps.track(trackingNum).result["TrackResponse"]["TrackInfo"]["TrackSummary"]["EventTime"]) == None:
-           return ""
-    return (usps.track(trackingNum).result["TrackResponse"]["TrackInfo"]["TrackSummary"]["EventTime"])
-
-def current_date(trackingNum):
-    return (usps.track(trackingNum).result["TrackResponse"]["TrackInfo"]["TrackSummary"]["EventDate"])
-
-def current_status(trackingNum):
-    return (usps.track(trackingNum).result["TrackResponse"]["TrackInfo"]["TrackSummary"]["Event"])
-
-def current_city(trackingNum):
-    if (usps.track(trackingNum).result["TrackResponse"]["TrackInfo"]["TrackSummary"]["EventCity"]) == None:
-        return "Last location: " + (usps.track(trackingNum).result["TrackResponse"]["TrackInfo"]["TrackDetail"][0]["EventCity"])
-    return (usps.track(trackingNum).result["TrackResponse"]["TrackInfo"]["TrackSummary"]["EventCity"])
-
-def current_state(trackingNum):
-    if (usps.track(trackingNum).result["TrackResponse"]["TrackInfo"]["TrackSummary"]["EventState"]) == None:
-        return ""
-    return (usps.track(trackingNum).result["TrackResponse"]["TrackInfo"]["TrackDetail"][0]["EventState"])
-
-def current_zipcode(trackingNum):
-    if (usps.track(trackingNum).result["TrackResponse"]["TrackInfo"]["TrackSummary"]["EventZIPCode"]) == None:
-        return ""
-    return (usps.track(trackingNum).result["TrackResponse"]["TrackInfo"]["TrackSummary"]["EventZIPCode"])
-
-
-def current_dateTime(trackingNum):
-    if (current_time(trackingNum) == ""):
-        return current_date(trackingNum)
-    else:
-        return str(current_date(trackingNum)) + " at " + str(current_time(trackingNum))
-
-'''
 
 def expected_delivery_date(trackingNum, current_dateTime, check = 0):
     try:
