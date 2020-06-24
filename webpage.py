@@ -43,8 +43,6 @@ def USPS_list(trackingNum):
 def FedEx_list(trackingNum):
     return FedEx_API.setUpDriver(trackingNum)
 
-
-@app.route('/update')
 def updateTableDict(aDict, tableDict = {}):
     print(str(aDict))
     for item in aDict:

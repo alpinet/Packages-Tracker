@@ -42,7 +42,7 @@ def get_info(trackingNum):
     else:
         current_dateTime = str(current_date) + " at " + str(current_time)
     current_location = str(current_city) + ", " + str(current_state) + " " + str(current_zipcode)
-    return ["FedEx", trackingNum, current_location, current_status, current_dateTime]
+    return ["USPS", trackingNum, current_location, current_status, current_dateTime]
 '''
 
 def current_time(trackingNum):
