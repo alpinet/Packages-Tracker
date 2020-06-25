@@ -12,13 +12,13 @@ def get_json_dict(tracking_number_input):
     data = {
         "UPSSecurity": {
             "UsernameToken": {
-                "Username": os.environ.get('username')
+                "Username": "alpinetang26"
 ,
-                "Password": os.environ.get('password')
+                "Password": "lakerzRgood23601!"
 
             },
             "ServiceAccessToken": {
-                "AccessLicenseNumber": os.environ.get('access_num')
+                "AccessLicenseNumber": "CD732771103FDC95"
             }
         },
         "TrackRequest": {
@@ -33,35 +33,58 @@ def get_json_dict(tracking_number_input):
     }
     r = requests.post(url="https://wwwcie.ups.com/rest/Track", json=data)
     return r
+
 with open('usps.json', 'w') as outfile:
-    json.dump(get_json_dict("1ZRA15530376445450").json(), outfile, indent=4)
+   json.dump(get_json_dict("1ZRA15530376445450").json(), outfile, indent=4)
+
 def current_city(tracking_number_input):
-    return(get_json_dict(tracking_number_input).json()["TrackResponse"]["Shipment"]["Package"]["Activity"][0]["ActivityLocation"]["Address"][
-              "City"])
+    try:
+        return(get_json_dict(tracking_number_input).json()["TrackResponse"]["Shipment"]["Package"]["Activity"][0]["ActivityLocation"]["Address"][
+                  "City"])
+    except:
+        return ("")
 def current_state(tracking_number_input):
-    return(get_json_dict(tracking_number_input).json()["TrackResponse"]["Shipment"]["Package"]["Activity"][0]["ActivityLocation"]["Address"][
-              "StateProvinceCode"])
+    try:
+        return(get_json_dict(tracking_number_input).json()["TrackResponse"]["Shipment"]["Package"]["Activity"][0]["ActivityLocation"]["Address"][
+                  "StateProvinceCode"])
+    except:
+        return ""
 def current_zipCode(tracking_number_input):
-    return(get_json_dict(tracking_number_input).json()["TrackResponse"]["Shipment"]["Package"]["Activity"][0]["ActivityLocation"]["Address"][
+    try:
+        return(get_json_dict(tracking_number_input).json()["TrackResponse"]["Shipment"]["Package"]["Activity"][0]["ActivityLocation"]["Address"][
               "PostalCode"])
+    except:
+        return ""
 def current_country(tracking_number_input):
-    return(get_json_dict(tracking_number_input).json()["TrackResponse"]["Shipment"]["Package"]["Activity"][0]["ActivityLocation"]["Address"][
+    try:
+        return(get_json_dict(tracking_number_input).json()["TrackResponse"]["Shipment"]["Package"]["Activity"][0]["ActivityLocation"]["Address"][
               "CountryCode"])
+    except:
+        return ""
 def current_status_description(tracking_number_input):
-    return(get_json_dict(tracking_number_input).json()["TrackResponse"]["Shipment"]["Package"]["Activity"][0]["Status"]["Description"])
+    try:
+        return(get_json_dict(tracking_number_input).json()["TrackResponse"]["Shipment"]["Package"]["Activity"][0]["Status"]["Description"])
+    except:
+        return ""
 def current_date(tracking_number_input):
-    date = (get_json_dict(tracking_number_input).json()["TrackResponse"]["Shipment"]["Package"]["Activity"][0]["Date"])
-    return (date[4:6] + "/" + date[6:8] + "/" + date[0:4])
+    try:
+        date = (get_json_dict(tracking_number_input).json()["TrackResponse"]["Shipment"]["Package"]["Activity"][0]["Date"])
+        return (date[4:6] + "/" + date[6:8] + "/" + date[0:4])
+    except:
+        return ""
 def current_time(tracking_number_input):
-    time = (get_json_dict(tracking_number_input).json()["TrackResponse"]["Shipment"]["Package"]["Activity"][0]["Time"])
-    if int(time[0:2]) >= 13:
-        return (str(int(time[0:2]) - 13) + ":" + str(int(time[2:5])) + "PM")
-    else:
-        return (str(int(time[0:2])) + ":" + str(int(time[2:5])) + "AM")
+    try:
+        time = (get_json_dict(tracking_number_input).json()["TrackResponse"]["Shipment"]["Package"]["Activity"][0]["Time"])
+        if int(time[0:2]) >= 13:
+            return (str(int(time[0:2]) - 12) + ":" + str(time)[2:4] + "PM")
+        else:
+            return (str(int(time[0:2])) + ":" + str(int(time[2:4])) + "AM")
+    except:
+        return ""
 def current_dateTime(tracking_number_input):
     return str(current_date(tracking_number_input)) + " at " + str(current_time(tracking_number_input))
 
-def UPS_estimated_delivery_date(tracking_number_input, driver):
+def UPS_estimated_delivery_date(tracking_number_input):
     try:
         options = Options()
         options.add_argument("--headless")
@@ -74,6 +97,7 @@ def UPS_estimated_delivery_date(tracking_number_input, driver):
         delivery_date = driver.find_elements_by_xpath("//*[@id='stApp_scheduledDeliveryDay']")[0].text
         delivery_day = driver.find_elements_by_xpath("//*[@id='stApp_scheduledDelivery']")[0].text
         delivery_time = driver.find_elements_by_xpath("//*[@id='stApp_packageStatusTimeLbl_time']")[0].text
-        return (str(delivery_date) + str(delivery_day) + str(delivery_time))
+        return (str(delivery_date) + " " + str(delivery_day) +" " + str(delivery_time))
     except:
         return "Completed delivery on ", current_dateTime(tracking_number_input)
+

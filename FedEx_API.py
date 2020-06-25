@@ -5,19 +5,17 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from datetime import date
 import time
-
+import os
 #391425387258
 
 def setUpDriver(trackingNum, check = 0):
-    try:
-        options = Options()
-        options.add_argument("--headless")
-        driver = webdriver.Chrome("/Users/josephtang/PycharmProjects/FirstSeleniumTest/drivers/chromedriver",
-                                  options=options)
-        driver.get("https://www.fedex.com/apps/fedextrack/index.html?tracknumbers=" + trackingNum + "&cntry_code=us")
-        return ["hi"]
-    except:
-        return ["yes"]
+    #options = Options()
+    #options.add_argument("--headless")
+    #driver = webdriver.Chrome("/Users/josephtang/PycharmProjects/FirstSeleniumTest/drivers/chromedriver", options = options)
+
+    driver - webdriver.PhantomJS()
+
+    driver.get("https://www.fedex.com/apps/fedextrack/index.html?tracknumbers=" + trackingNum + "&cntry_code=us")
     wait = WebDriverWait(driver, 10)
     men_menu = wait.until(EC.visibility_of_element_located((By.XPATH, "//*[@id='container']/div/div/div[2]/div/div[1]/div[2]/div[3]/div/div[3]/div/div[1]/div/div[2]/div[5]/div/h3[3]")))
     current_status1 = driver.find_elements_by_xpath("//*[@id='container']/div/div/div[2]/div/div[1]/div[2]/div[3]/div/div[3]/div/div[1]/div/div[2]/div[5]/div/h3[1]")[0].text
