@@ -2,20 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a3182290-7ae0-4856-b49c-485e5ac1de38" name="Default Changelist" comment="Merge branch 'master' of https://github.com/alpinet/Packages-Tracker&#10;# Please enter a commit message to explain why this merge is necessary,&#10;# especially if it merges an updated upstream into a topic branch.&#10;#&#10;# Lines starting with '#' will be ignored, and an empty message aborts&#10;# the commit.">
-      <change beforePath="$PROJECT_DIR$/.idea/Tracking_API.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Tracking_API.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FedEx_API.py" beforeDir="false" afterPath="$PROJECT_DIR$/FedEx_API.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UPS_API.py" beforeDir="false" afterPath="$PROJECT_DIR$/UPS_API.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/USPS_API.py" beforeDir="false" afterPath="$PROJECT_DIR$/USPS_API.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/image2.gif" beforeDir="false" afterPath="$PROJECT_DIR$/static/image2.gif" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/white_pic.png" beforeDir="false" afterPath="$PROJECT_DIR$/static/white_pic.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/after.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/after.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/look.css" beforeDir="false" afterPath="$PROJECT_DIR$/templates/look.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/usps.json" beforeDir="false" afterPath="$PROJECT_DIR$/usps.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webpage.py" beforeDir="false" afterPath="$PROJECT_DIR$/webpage.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -34,20 +23,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/webpage.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="57">
-              <caret line="4" column="17" selection-start-line="4" selection-end-line="5" selection-end-column="11" />
+            <state relative-caret-position="117">
+              <caret line="8" column="16" lean-forward="true" selection-start-line="4" selection-end-line="5" selection-end-column="11" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/UPS_API.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="284">
-              <caret line="25" column="37" lean-forward="true" selection-start-line="25" selection-start-column="37" selection-end-line="25" selection-end-column="37" />
+            <state relative-caret-position="74">
+              <caret line="11" column="12" lean-forward="true" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -405,7 +394,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="203" y="23" width="1372" height="831" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.115889214" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -563,13 +551,6 @@
     <entry file="file://$PROJECT_DIR$/static/image2.gif">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/webpage.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="57">
-          <caret line="4" column="17" selection-start-line="4" selection-end-line="5" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/USPS_API.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
@@ -592,11 +573,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/UPS_API.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="284">
-          <caret line="25" column="37" lean-forward="true" selection-start-line="25" selection-start-column="37" selection-end-line="25" selection-end-column="37" />
+        <state relative-caret-position="74">
+          <caret line="11" column="12" lean-forward="true" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webpage.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="8" column="16" lean-forward="true" selection-start-line="4" selection-end-line="5" selection-end-column="11" />
         </state>
       </provider>
     </entry>
