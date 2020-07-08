@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Tracking_API.iml" filepath="$PROJECT_DIR$/.idea/Tracking_API.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Tracking_Extension/.idea/Tracking_Extension.iml" filepath="$PROJECT_DIR$/../Tracking_Extension/.idea/Tracking_Extension.iml" />
     </modules>
   </component>
 </project>

@@ -6,7 +6,6 @@ from selenium.webdriver.chrome.options import Options
 from datetime import date
 import time
 import os
-#391425387258
 
 def setUpDriver(trackingNum, check = 0):
     #options = Options()
@@ -42,6 +41,4 @@ def setUpDriver(trackingNum, check = 0):
     else:
         delivery_date = str(driver.find_elements_by_xpath("//*[@id='container']/div/div/div[2]/div/div[1]/div[2]/div[3]/div/div[3]/div/div[1]/div/div[2]/h1/div[2]")[0].text)
     return ["FedEx", trackingNum, current_location, current_status, current_dateTime,delivery_date]
-
-
 

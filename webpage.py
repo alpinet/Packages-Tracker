@@ -1,4 +1,6 @@
-from datetime import datetime, timezone
+from datetime import datetime
+from pytz import timezone
+import pytz
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import time
@@ -11,48 +13,61 @@ import os
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
-def create_driver():
-    options = Options()
-    options.add_argument("--headless")
-    driver = webdriver.Chrome("/Users/josephtang/PycharmProjects/FirstSeleniumTest/drivers/chromedriver", options=options)
-    return driver
 
-def UPS_list(trackingNum):
+def UPS_list(trackingNum, itemLabel):
+    status = (UPS_API.current_status_description(trackingNum))
+    if status == False:
+        raise ValueError("Too many requests. Please wait a little and try again.")
+    else:
+        status = str(status)
     company = "UPS"
     try:
         location = str(UPS_API.current_city(trackingNum)) + ", " + str(UPS_API.current_state(trackingNum)) + " " + str(
             UPS_API.current_zipCode(trackingNum))
     except:
         location = str(UPS_API.current_city(trackingNum)) + ", " + str(UPS_API.current_state(trackingNum))
-    status = str(UPS_API.current_status_description(trackingNum))
-    dateTime = str(UPS_API.current_date(trackingNum)) + " at " + str(UPS_API.current_time(trackingNum))
-    if (status != "Delivered"):
-        return [company, trackingNum, location, status, dateTime, UPS_API.UPS_estimated_delivery_date(trackingNum)]
+    if location == ",  " or location == ",":
+        if UPS_API.check_valid(trackingNum) == False:
+            raise KeyError("Not valid tracking num")
+        location = "In Transit"
+    if str(UPS_API.current_date(trackingNum)) == "":
+        dateTime = ""
     else:
-        return [company, trackingNum, location, status, dateTime, "Completed on " + dateTime]
+        dateTime = str(UPS_API.current_date(trackingNum)) + " at " + str(UPS_API.current_time(trackingNum))
+    if (status != "Delivered"):
+        return [itemLabel, company, trackingNum, location, status, dateTime, UPS_API.UPS_estimated_delivery_date(trackingNum)]
+    else:
+        return [itemLabel, company, trackingNum, location, status, dateTime, "Completed on " + dateTime]
 
-def USPS_list(trackingNum):
+def USPS_list(trackingNum, itemLabel):
     USPS_list = USPS_API.get_info(trackingNum)
     USPS_list.append(USPS_API.expected_delivery_date(trackingNum, USPS_list[4]))
+    USPS_list.insert(0, itemLabel)
     if ("Delivered" in USPS_list[3]):
         USPS_list[5] = str("Completed on ") + str(USPS_list[4])
         return USPS_list
     else:
         return USPS_list
 
-def FedEx_list(trackingNum):
-    return FedEx_API.setUpDriver(trackingNum)
+def FedEx_list(trackingNum, itemLabel):
+    FedEx_list = FedEx_API.setUpDriver(trackingNum)
+    FedEx_list.insert(0, itemLabel)
+    return FedEx_list
 
-def updateTableDict(aDict, tableDict = {}):
-    print(str(aDict))
+def updateTableDict(aDict):
     for item in aDict:
+        print(item)
+        itemLabel = aDict[item][0]
         if "Completed" not in aDict[item]:
             if len(item) == 18: #UPS
-                aDict[item] = UPS_list(item)
-            if len(item) == 22: #USPS
-                aDict[item] = USPS_list(item)
-            if len(item) == 12: #FEDEX
-                aDict[item] = FedEx_list(item)
+                try:
+                    aDict[item] = UPS_list(item, itemLabel)
+                except ValueError:
+                    flash("Too many requests. Please wait a little and try again.")
+            elif len(item) > 21: #USPS
+                aDict[item] = USPS_list(item, itemLabel)
+            elif len(item) >= 12 and len(item) < 21: #FEDEX
+                aDict[item] = FedEx_list(item, itemLabel)
     return aDict
 
 
@@ -68,24 +83,30 @@ def home_page():
         current_dateTime = "Not yet been updated"
     if request.method == 'POST':
         if "AddTrackingNum" in request.form:
-            trackingNum = request.form['AddTrackingNum']
-            if trackingNum in tableDict:
-                flash("Tracking number already in the table.")
-            elif (len(request.form['AddTrackingNum']) == 18):
-                try:
-                    tableDict[trackingNum] = UPS_list(trackingNum)
-                except:
-                    flash("Invalid UPS Tracking Number")
-            elif (len(request.form['AddTrackingNum']) == 22):
-                try:
-                    tableDict[trackingNum] = USPS_list(trackingNum)
-                except:
-                    flash("Invalid USPS Tracking Number")
-            elif (len(request.form['AddTrackingNum']) == 12):
-                try:
-                    tableDict[trackingNum] = FedEx_list(trackingNum)
-                except:
-                    flash("Invalid FedEx Tracking Number")
+            if request.form['AddTrackingNum'] != "" and request.form['itemLabel'] != "":
+                trackingNum = request.form['AddTrackingNum']
+                itemLabel = request.form['itemLabel']
+                if trackingNum in tableDict:
+                    flash("Tracking number already in the table.")
+                elif (len(request.form['AddTrackingNum']) == 18):
+                    try:
+                        tableDict[trackingNum] = UPS_list(trackingNum, itemLabel)
+                    except:
+                        flash("Invalid UPS Tracking Number")
+                elif (len(request.form['AddTrackingNum']) > 21):
+                    try:
+                        tableDict[trackingNum] = USPS_list(trackingNum, itemLabel)
+                    except:
+                        flash("Invalid USPS Tracking Number")
+                elif len(request.form['AddTrackingNum']) >= 12 and len(request.form['AddTrackingNum']) < 21:
+                    try:
+                        tableDict[trackingNum] = FedEx_list(trackingNum, itemLabel)
+                    except:
+                        flash("Invalid FedEx Tracking Number")
+            elif request.form['AddTrackingNum'] == "":
+                    flash("Must input tracking number.")
+            elif request.form['itemLabel'] == "":
+                    flash("Must add item name/description")
             else:
                 flash("Invalid Tracking Number; Must be UPS, USPS, or FedEx")
             resp = make_response(render_template('after.html', tableDict=tableDict, current_dateTime=current_dateTime))
@@ -99,13 +120,10 @@ def home_page():
             resp.set_cookie('table', str(tableDict))
             return resp
         elif "update" in request.form:
-            local_time = str(datetime.now(timezone.utc).astimezone())
-            current_date = str(local_time[5:7]) + "/" + str(local_time[8:10]) + "/" + str(local_time[0:4])
-            if int(local_time[11:13]) > 12:
-                current_time = str(int(local_time[11:13]) - 12) + ":" + str(local_time[14:16]) + " PM"
-            else:
-                current_time = str(int(local_time[11:13])) + ":" + str(local_time[14:16]) + " AM"
-            current_dateTime = current_date + " " + current_time
+            date_format = '%m/%d/%Y %H:%M %Z'
+            date = datetime.now(tz=pytz.utc)
+            date = date.astimezone(timezone('US/Pacific'))
+            current_dateTime = date.strftime(date_format)
             resp = make_response(render_template('after.html', tableDict=updateTableDict(tableDict), current_dateTime=current_dateTime))
             resp.set_cookie('table', str(tableDict))
             resp.set_cookie('current_dateTime', str(current_dateTime))
@@ -118,4 +136,4 @@ def home_page():
 
 
 if __name__ == "__main__":
-    app.run(debug=False)
+    app.run(debug=True)

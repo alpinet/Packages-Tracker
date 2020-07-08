@@ -14,7 +14,7 @@ usps = USPSApi(os.environ.get('USPS_num'))
 #9449010205561009777268 caleb's track
 #print(type(track.result))
 #with open('usps.json', 'w') as outfile:
-#    json.dump(track.result, outfile, indent=4)
+#    json.dump(usps.track("4205693592023999991074543450879419").result, outfile, indent=4)
 
 def get_info(trackingNum):
     tracking_results = usps.track(trackingNum).result
@@ -46,10 +46,12 @@ def get_info(trackingNum):
 
 def expected_delivery_date(trackingNum, current_dateTime, check = 0):
     try:
-        options = Options()
-        options.add_argument("--headless")
-        driver = webdriver.Chrome("/Users/josephtang/PycharmProjects/FirstSeleniumTest/drivers/chromedriver",
-                                  options=options)
+        #options = Options()
+        #options.add_argument("--headless")
+        #driver = webdriver.Chrome("/Users/josephtang/PycharmProjects/FirstSeleniumTest/drivers/chromedriver",
+        #                          options=options)
+        driver = webdriver.PhantomJS()
+
         driver.get("https://tools.usps.com/go/TrackConfirmAction?qtc_tLabels1=" + trackingNum)
         wait = WebDriverWait(driver, 10)
 

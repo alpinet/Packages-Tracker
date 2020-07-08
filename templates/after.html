@@ -34,6 +34,7 @@ tr:nth-child(even) {
 }
 
 #white_box, #updating_box {
+    background-color: white;
     display: none;
     position: absolute;
     top: 50%;
@@ -43,8 +44,9 @@ tr:nth-child(even) {
 }
 
 #loading_gif, #loading_gif2 {
+    background-color: white;
     display: none;
-    border: 10px solid #696969;
+    border: 10px solid #000000;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -57,19 +59,19 @@ tr:nth-child(even) {
 }
 
 #intro {
-    padding: 3%;
+    padding: 2%;
     background-color: #87CEFA;
 }
 
 #add_css {
     padding: 2.5%;
     text-align: center;
-    display: inline-block;
+    justify-content: center;
     width: 100%;
 }
 
 
-#remove_button {
+.remove_class {
     display: none;
 }
 
@@ -79,23 +81,52 @@ tr:nth-child(even) {
 }
 
 #updating_text, #tracking_text {
-    font-size: 170%;
+    font-size: 200%;
 }
+
+#body{
+    padding: 1%;
+}
+
+#add_button{
+    display:inline-block;
+}
+
+
+#addText, #addLabel{
+    font-size: large;
+}
+
+#addText{
+    padding-bottom: 2%;
+}
+
+#inputButtons{
+    padding-right:2%;
+}
+
+.nextTo{
+    display: inline-block;
+    vertical-align: middle;
+    padding-right: 2%;
+}
+
+
 
 </style>
 
-<body>
+<body id = "body">
     <div id = "white_box">
-        <img src="{{url_for('static', filename='white_pic.png')}}">
+        <img class = "pics" src="{{url_for('static', filename='white_pic.png')}}">
         <div id = "loading_gif">
-            <img src="{{url_for('static', filename='image2.gif')}}"></img>
+            <img class = "pics" src="{{url_for('static', filename='image2.gif')}}"></img>
             <div id = "tracking_text" align = "center" >Tracking packages...</div>
         </div>
     </div>
     <div id = "updating_box">
-        <img src="{{url_for('static', filename='white_pic.png')}}">
+        <img class = "pics" src="{{url_for('static', filename='white_pic.png')}}">
         <div id = "loading_gif2">
-            <img src="{{url_for('static', filename='image2.gif')}}"></img>
+            <img class = "pics" src="{{url_for('static', filename='image2.gif')}}"></img>
             <div id = "updating_text" align = "center" >Updating...</div>
         </div>
     </div>
@@ -107,10 +138,20 @@ tr:nth-child(even) {
 
         <div id = "add_css">
             <form id = "add" method = "POST">
-                    <input type = "text", placeholder = "Add Tracking Number", name = "AddTrackingNum">
-                    <input class = "btn btn-primary" type = "submit", onclick = "loading(); return False;", value = "Add">
+            <div class = nextTo id = "inputsButtons">
+                <div id = "addText"><strong>Add Tracking Number:</strong>
+                    <input id = "input1" type = "text", placeholder = "ex: 1ZR435FND43AM", name = "AddTrackingNum">
+                </div>
+                <div id = "addLabel"><strong>Item Name/Description:</strong>
+                    <input id = "input2" type = "text", placeholder = "ex: Blue Shorts", name = "itemLabel">
+                </div>
+            </div>
+            <div class = nextTo>
+                <input id = "add_button" class = "btn btn-primary btn-lg" type = "submit", onclick = "loading(); return False;", value = "Add">
+            </div>
             </form>
         </div>
+
 
         <div id = "update">
             <form id = "update_button" type = "hidden" method = "POST">
@@ -140,6 +181,7 @@ tr:nth-child(even) {
 
               <table>
                <tr>
+                <th>Item Name</th>
                 <th>Company</th>
                 <th>Tracking Number</th>
                 <th>Location</th>
@@ -155,10 +197,10 @@ tr:nth-child(even) {
                          <td>{{y}}</td>
                        {%endfor%}
                        <td>
-                           <form id = "remove_button" type = "hidden" method = "POST">
-                               <input type = "text", placeholder = "Remove Tracking Number", name = "RemoveTrackingNum", value = {{tableDict[i][1]}}>
+                           <form class = remove_class id = "remove_button{{i}}" type = "hidden" method = "POST">
+                               <input type = "text", placeholder = "Remove Tracking Number", name = "RemoveTrackingNum", value = {{tableDict[i][2]}}>
                            </form>
-                           <input form = "remove_button"  class = "btn btn-danger" type = "submit", value = "Remove">
+                           <input form = "remove_button{{i}}"  class = "btn btn-danger" type = "submit", value = "Remove">
                        </td>
                    </div>
                  {%endfor%}

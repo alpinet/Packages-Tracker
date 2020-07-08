@@ -12,13 +12,13 @@ def get_json_dict(tracking_number_input):
     data = {
         "UPSSecurity": {
             "UsernameToken": {
-                "Username": "alpinetang26"
+                "Username":os.environ.get('username')
 ,
-                "Password": "lakerzRgood23601!"
+                "Password": os.environ.get('password')
 
             },
             "ServiceAccessToken": {
-                "AccessLicenseNumber": "CD732771103FDC95"
+                "AccessLicenseNumber": os.environ.get('access_num')
             }
         },
         "TrackRequest": {
@@ -36,6 +36,16 @@ def get_json_dict(tracking_number_input):
 
 with open('usps.json', 'w') as outfile:
    json.dump(get_json_dict("1ZRA15530376445450").json(), outfile, indent=4)
+
+def check_valid(tracking_number_input):
+    try:
+        if get_json_dict(tracking_number_input).json()["TrackResponse"]["Response"]["ResponseStatus"]["Code"] == "1":
+            return True
+        if get_json_dict(tracking_number_input).json()["response"]["errors"][0]["code"] == "10429":
+            return True
+    except:
+        return False
+
 
 def current_city(tracking_number_input):
     try:
@@ -63,9 +73,14 @@ def current_country(tracking_number_input):
         return ""
 def current_status_description(tracking_number_input):
     try:
-        return(get_json_dict(tracking_number_input).json()["TrackResponse"]["Shipment"]["Package"]["Activity"][0]["Status"]["Description"])
+        if get_json_dict(tracking_number_input).json()["response"]["errors"][0]["code"] == "10429":
+            return False
     except:
-        return ""
+        try:
+            return (get_json_dict(tracking_number_input).json()["TrackResponse"]["Shipment"]["Package"]["Activity"][0]["Status"][
+                "Description"])
+        except:
+            return "Order Process: Ready for UPS"
 def current_date(tracking_number_input):
     try:
         date = (get_json_dict(tracking_number_input).json()["TrackResponse"]["Shipment"]["Package"]["Activity"][0]["Date"])
@@ -85,19 +100,26 @@ def current_dateTime(tracking_number_input):
     return str(current_date(tracking_number_input)) + " at " + str(current_time(tracking_number_input))
 
 def UPS_estimated_delivery_date(tracking_number_input):
+    if current_status_description(tracking_number_input) == "Order Process: Ready for UPS":
+        return "Delivery date will be updated when UPS receives item"
     try:
-        options = Options()
-        options.add_argument("--headless")
-        driver = webdriver.Chrome("/Users/josephtang/PycharmProjects/FirstSeleniumTest/drivers/chromedriver",
-                                  options=options)
+        #options = Options()
+        #options.add_argument("--headless")
+        #driver = webdriver.Chrome("/Users/josephtang/PycharmProjects/FirstSeleniumTest/drivers/chromedriver",
+                                  #options=options)
+        driver = webdriver.PhantomJS()
+
         driver.get("https://www.ups.com/track?loc=en_US&tracknum=" + tracking_number_input + "&requester=MB/trackdetails")
         wait = WebDriverWait(driver, 10)
         men_menu = wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="stApp_scheduledDeliveryDay"]')))
         #print(driver.find_elements_by_xpath('//*[@id="stApp_scheduledDeliveryDay"]'))
         delivery_date = driver.find_elements_by_xpath("//*[@id='stApp_scheduledDeliveryDay']")[0].text
+        print(str(delivery_date))
         delivery_day = driver.find_elements_by_xpath("//*[@id='stApp_scheduledDelivery']")[0].text
-        delivery_time = driver.find_elements_by_xpath("//*[@id='stApp_packageStatusTimeLbl_time']")[0].text
+        print(str(delivery_day))
+        delivery_time = driver.find_elements_by_xpath("//*[@id='stApp_eodDate']")[0].text
+        print(str(delivery_time))
         return (str(delivery_date) + " " + str(delivery_day) +" " + str(delivery_time))
-    except:
-        return "Completed delivery on ", current_dateTime(tracking_number_input)
-
+    except Exception as e:
+        print(e)
+        return str("Completed delivery on ") + str(current_dateTime(tracking_number_input))
