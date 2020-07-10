@@ -8,11 +8,11 @@ import time
 import os
 
 def setUpDriver(trackingNum, check = 0):
-    options = Options()
-    options.add_argument("--headless")
-    driver = webdriver.Chrome("/Users/josephtang/PycharmProjects/FirstSeleniumTest/drivers/chromedriver", options = options)
+    #options = Options()
+    #options.add_argument("--headless")
+    #driver = webdriver.Chrome("/Users/josephtang/PycharmProjects/FirstSeleniumTest/drivers/chromedriver", options = options)
 
-    #driver = webdriver.PhantomJS()
+    driver = webdriver.PhantomJS()
 
     driver.get("https://www.fedex.com/apps/fedextrack/index.html?tracknumbers=" + trackingNum + "&cntry_code=us")
     wait = WebDriverWait(driver, 10)
