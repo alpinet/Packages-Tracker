@@ -8,7 +8,7 @@ import time
 import os
 
 def setUpDriver(trackingNum, check = 0):
-    #options = Options()
+    #ptions = Options()
     #options.add_argument("--headless")
     #driver = webdriver.Chrome("/Users/josephtang/PycharmProjects/FirstSeleniumTest/drivers/chromedriver", options = options)
 
