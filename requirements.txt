@@ -4,7 +4,7 @@ Flask==1.1.1
 gunicorn==19.10.0
 itsdangerous==1.1.0
 Jinja2==2.11.1
-lxml==4.5.0
+lxml==4.6.2
 MarkupSafe==1.1.1
 selenium==3.141.0
 suds-jurko==0.6
