@@ -6,6 +6,7 @@ from selenium.webdriver.chrome.options import Options
 from datetime import date
 import time
 import os
+import sys
 
 def setUpDriver(trackingNum, check = 0):
     #ptions = Options()
