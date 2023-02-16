@@ -9,6 +9,6 @@ MarkupSafe==1.1.1
 selenium==3.141.0
 suds-jurko==0.6
 usps-api==0.4
-Werkzeug==1.0.0
+Werkzeug==2.2.3
 xmltodict==0.12.0
 pytz==2020.1
